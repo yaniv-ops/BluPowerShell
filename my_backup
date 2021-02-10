@@ -1,0 +1,25 @@
+#!/bin/bash
+# (@)/my_backup
+# the program searches from /etc/passwd all the home directories for all users
+# type "parted -l" in cli to figure out your backup device
+
+# make the backup tape
+TAPE=/dev/sdb #check your device path
+HOMES=`grep -i /home /etc/passwd | cut -f6 -d":"` 
+echo $HOMES
+# make bakups from home directories of users to the TAPE backup device
+
+# rewind the TAPE device
+
+mt $TAPE rew
+
+# do the backup 
+
+tar cvf $TAPE $HOMES
+
+# rewind and eject the TAPE
+
+mt $TAPE rewoffl 
+
+
+
